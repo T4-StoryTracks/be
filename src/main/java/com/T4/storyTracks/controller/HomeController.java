@@ -6,6 +6,8 @@ import com.T4.storyTracks.service.BlogService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,14 +20,8 @@ public class HomeController {
     private final BlogService blogService;
 
     @GetMapping("/")
-    public String findAll(Model model) throws JsonProcessingException {
+    public ResponseEntity<?> findAll() {
         List<BlogPostDTO> blogPostDTOList = blogService.findAll();
-        for (BlogPostDTO blogDTO : blogPostDTOList) {
-            System.out.println(blogDTO.getTitle());
-        }
-        ObjectMapper mapper = new ObjectMapper();
-        String jsonStr = mapper.writeValueAsString(blogPostDTOList);
-        System.out.println(jsonStr);
-        return "index";
+        return new ResponseEntity<>(blogPostDTOList, HttpStatus.OK);
     }
 }
