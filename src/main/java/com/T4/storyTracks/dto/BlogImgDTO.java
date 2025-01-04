@@ -18,8 +18,8 @@ public class BlogImgDTO {
 
     private Long imgId;
     private Long postId;
-    private String geoLat;
-    private String geoLong;
+    private Long geoLat;
+    private Long geoLong;
     private String imgPath;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime imgDtm;
@@ -30,7 +30,7 @@ public class BlogImgDTO {
     private String thumbYn;
 //    private BlogPostEntity blogPost;
 
-    public BlogImgDTO(Long imgId, Long postId, String geoLat, String geoLong, String imgPath, LocalDateTime imgDtm, String thumbYn) {
+    public BlogImgDTO(Long imgId, Long postId, Long geoLat, Long geoLong, String imgPath, LocalDateTime imgDtm, String thumbYn) {
         this.imgId = imgId;
         this.postId = postId;
         this.geoLat = geoLat;
