@@ -22,11 +22,5 @@ import java.util.ListIterator;
 public class BlogController {
     public final BlogService blogService;
 
-//    @PostMapping("/save")
-//    @Description("저장")
-//    public String save(@ModelAttribute BlogPostDTO blogPostDTO) throws IOException {
-//        blogService.save(blogPostDTO);
-//        return "index";
-//    }
 
 }

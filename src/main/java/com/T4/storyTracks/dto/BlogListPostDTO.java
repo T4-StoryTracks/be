@@ -10,16 +10,14 @@ import lombok.Setter;
 import org.springframework.context.annotation.Description;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BlogPostDTO {
+public class BlogListPostDTO {
     private Long postId;
     private String title;
     private String ogText;
@@ -29,9 +27,16 @@ public class BlogPostDTO {
     private LocalDateTime rgstDtm;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime chngDtm;
-    private List<BlogImgDTO> blogImgList = new ArrayList<>();
+    //    private String rgstDtm;
+//    private String chngDtm;
+    //private List<BlogImgEntity> imgEntityList = new ArrayList<>();
+//    private Long thumbImgId;
+//    private String thumbImgPath;
+//    private String thumbGeoLat;
+//    private String thumbGeoLong;
+    private Map<String, String> thumbHash = new HashMap<>(4);
 
-    public BlogPostDTO(Long postId, String title, String ogText, String aiGenText, String password, LocalDateTime rgstDtm) {
+    public BlogListPostDTO(Long postId, String title, String ogText, String aiGenText, String password, LocalDateTime rgstDtm) {
         this.postId = postId;
         this.title = title;
         this.ogText = ogText;
@@ -42,10 +47,10 @@ public class BlogPostDTO {
     }
 
     @Description(value="전체 조회 시 대표이미지 정보만 가져옴")
-    public static BlogPostDTO toPostDTO(BlogPostEntity blogPostEntity, List<BlogImgDTO> imgDTOList) {
+    public static BlogListPostDTO toPostListDTO(BlogPostEntity blogPostEntity, BlogImgEntity thumbImgEntity) {
 //        SimpleDateFormat dtFormat = new SimpleDateFormat("yyyyMMddkkmmss");
 
-        BlogPostDTO blogPostDTO = new BlogPostDTO();
+        BlogListPostDTO blogPostDTO = new BlogListPostDTO();
         blogPostDTO.setPostId(blogPostEntity.getPostId());
         blogPostDTO.setTitle(blogPostEntity.getTitle());
         blogPostDTO.setOgText(blogPostEntity.getOgText());
@@ -54,7 +59,17 @@ public class BlogPostDTO {
         blogPostDTO.setRgstDtm(blogPostEntity.getRgstDtm());
         //blogPostDTO.setImgEntityList(blogPostEntity.getImgEntityList());
 
-        blogPostDTO.setBlogImgList(imgDTOList);
+        // 대표이미지 정보 설정
+//        blogPostDTO.setThumbImgId(thumbImgEntity.getImgId());
+//        blogPostDTO.setThumbImgPath(thumbImgEntity.getImgPath());
+//        blogPostDTO.setThumbGeoLat(thumbImgEntity.getGeoLat());
+//        blogPostDTO.setThumbGeoLong(thumbImgEntity.getGeoLong());
+        Map<String, String> tmp = new HashMap<>(4);
+        tmp.put("thumbImgId",thumbImgEntity.getImgId().toString());
+        tmp.put("thumbImgPath",thumbImgEntity.getImgPath());
+        tmp.put("thumbGeoLat",thumbImgEntity.getGeoLat());
+        tmp.put("thumbGeoLong",thumbImgEntity.getGeoLong());
+        blogPostDTO.setThumbHash(tmp);
 
         return blogPostDTO;
     }

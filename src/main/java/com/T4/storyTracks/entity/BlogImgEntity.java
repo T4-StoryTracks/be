@@ -11,9 +11,10 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-@Table(name = "tb_imgs")
+@Table(name = "imgs")
 public class BlogImgEntity {
     @Id
+    @Column(nullable = false, name="img_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long imgId;
 
@@ -37,7 +38,10 @@ public class BlogImgEntity {
     @Column(name="thumb_yn")
     private String thumbYn;
 
+//    @Column(name="post_id")
+//    private String postId;
+
     @ManyToOne
-    @JoinColumn(name="postId")
+    @JoinColumn(name="post_Id")
     private BlogPostEntity blogPost;
 }
