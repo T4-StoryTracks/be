@@ -23,3 +23,9 @@ spring:
     show_sql: true
     logging.level:
       org.hibernate.SQL: debug
+
+gemini:
+  baseurl: https://generativelanguage.googleapis.com
+googleai:
+  api:
+    key: AIzaSyB9pHdfKH_1euOpv1kPrfepDUBoeoMtGwQ
