@@ -19,19 +19,21 @@ public class BlogImgDTO {
     private String geoLat;
     private String geoLong;
     private String imgPath;
-    private LocalDateTime imgDtm;
-    private LocalDateTime rgstDTm;
+//    private LocalDateTime imgDtm;
+//    private LocalDateTime rgstDtm;
+    private String imgDtm;
+    private String rgstDtm;
     private String thumbYn;
 //    private BlogPostEntity blogPost;
 
-    public BlogImgDTO(Long imgId, Long postId, String geoLat, String geoLong, String imgPath, LocalDateTime imgDtm, String thumbYn) {
+    public BlogImgDTO(Long imgId, Long postId, String geoLat, String geoLong, String imgPath, String imgDtm, String thumbYn) {
         this.imgId = imgId;
         this.postId = postId;
         this.geoLat = geoLat;
         this.geoLong = geoLong;
         this.imgPath = imgPath;
         this.imgDtm = imgDtm;
-        this.rgstDTm = rgstDTm;
+        this.rgstDtm = rgstDtm;
         this.thumbYn = thumbYn;
     }
 
@@ -42,8 +44,8 @@ public class BlogImgDTO {
         blogImgDTO.setGeoLat(blogImgEntity.getGeoLat());
         blogImgDTO.setGeoLong(blogImgEntity.getGeoLong());
         blogImgDTO.setImgPath(blogImgEntity.getImgPath());
-        blogImgDTO.setImgDtm(blogImgEntity.getImgDtm());
-        blogImgDTO.setRgstDTm(blogImgEntity.getRgstDTm());
+        blogImgDTO.setImgDtm(blogImgEntity.getImgDtm().toString());
+        blogImgDTO.setRgstDtm(blogImgEntity.getRgstDTm().toString());
 
         return blogImgDTO;
     }

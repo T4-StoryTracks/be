@@ -24,11 +24,13 @@ public class BlogPostDTO {
     private String ogText;
     private String aiGenText;
     private String password;
-    private LocalDateTime rgstDtm;
-    private LocalDateTime chngDtm;
+//    private LocalDateTime rgstDtm;
+//    private LocalDateTime chngDtm;
+    private String rgstDtm;
+    private String chngDtm;
 //    private List<BlogImgEntity> imgEntityList = new ArrayList<>();
 
-    public BlogPostDTO(Long postId, String title, String ogText, String aiGenText, String password, LocalDateTime rgstDtm) {
+    public BlogPostDTO(Long postId, String title, String ogText, String aiGenText, String password, String rgstDtm) {
         this.postId = postId;
         this.title = title;
         this.ogText = ogText;
@@ -44,7 +46,7 @@ public class BlogPostDTO {
         blogPostDTO.setOgText(blogPostEntity.getOgText());
         blogPostDTO.setAiGenText(blogPostEntity.getAiGenText());
         blogPostDTO.setPassword(blogPostEntity.getPassword());
-        blogPostDTO.setRgstDtm(blogPostEntity.getRgstDtm());
+        blogPostDTO.setRgstDtm(blogPostEntity.getRgstDtm().toString());
 
         return blogPostDTO;
     }
