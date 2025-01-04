@@ -10,11 +10,11 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
 @Configuration
 public class AppConfig {
-    String baseUrl = "https://generativelanguage.googleapis.com";
-    String apiKey = "AIzaSyB9pHdfKH_1euOpv1kPrfepDUBoeoMtGwQ";
+
     @Bean
-    public RestClient geminiRestClient(String baseUrl,
-                                       String apiKey) {
+    public RestClient geminiRestClient() {
+        String baseUrl = "https://generativelanguage.googleapis.com";
+        String apiKey = "AIzaSyB9pHdfKH_1euOpv1kPrfepDUBoeoMtGwQ";
         return RestClient.builder()
                 .baseUrl(baseUrl)
                 .defaultHeader("x-goog-api-key", apiKey)
