@@ -55,22 +55,21 @@ public class BlogService {
                                 
                 **Output Structure:**
                 1. **Introduction:** Briefly introduce the setting and context.
-                2. **Main Body:** Narrate the experience in detail, including actions, observations, and emotions. 
+                2. **Main Body:** Narrate the experience in detail, including actions, observations, and emotions.
                 3. **Conclusion:** Summarize the experience and its personal significance.
                 """
                 +
-                "**Must Include information:**\n"
-                + "- location(guess through given latitude and longtitude): latitude = " + geoLat + ", longtitude = " + geoLong
+                "**Must Include Input Data:**\n"
+                + "- location(inferred through the given latitude and longitude): latitude = " + geoLat + ", longitude = " + geoLong
                 + "\n- base context: " + ogText
                 + """
-                **Return Format:**
-                - Markdown Language
+                **Output Format:**
+                - Markdown language
                 - """ + length + "words"
                 +
                 """
                 
                 Be creative but remain consistent with the input data.
-                Make final return data type to markdown.
                 """;
         String text = service.getCompletion(promt);
         return text;
