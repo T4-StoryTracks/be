@@ -6,9 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.awt.desktop.QuitEvent;
+import java.util.List;
 import java.util.Optional;
 
 public interface BlogImgRepository extends JpaRepository<BlogImgEntity, Long> {
 
     Optional<BlogImgEntity> findByBlogPostPostIdAndThumbYn(@Param("postId") Long postId, @Param("thumbYn") String thumbYn);
+
+    List<BlogImgEntity> findByBlogPostPostId(@Param("postId") Long postId);
 }
