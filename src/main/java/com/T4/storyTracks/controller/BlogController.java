@@ -35,4 +35,5 @@ public class BlogController {
         BlogImgEntity savedLocation = blogService.saveLagLong(request);
         return ResponseEntity.ok(savedLocation);
     }
+
 }
