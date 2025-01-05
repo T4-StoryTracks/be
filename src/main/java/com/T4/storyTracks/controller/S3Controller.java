@@ -17,6 +17,7 @@ public class S3Controller {
 
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+        // 사용법: % curl -X POST http://localhost:8080/api/files/upload -F "file=@/Users/bl216/DSC01479.JPG"
         try {
             String fileUrl = s3Service.uploadFile(file, "uploadtest1");
             return ResponseEntity.ok(fileUrl);
