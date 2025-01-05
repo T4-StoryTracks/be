@@ -17,11 +17,11 @@ public class BlogImgEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long imgId;
 
-    @Column(name="geo_lat", length = 10)
-    private String geoLat;
+    @Column(name="geo_lat")
+    private Long geoLat;
 
-    @Column(name="geo_long", length = 10)
-    private String geoLong;
+    @Column(name="geo_long")
+    private Long geoLong;
 
     @Column(name="img_path")
     private String imgPath;
