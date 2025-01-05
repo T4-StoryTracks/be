@@ -58,36 +58,20 @@ public class BlogService {
     //aiGenTextList를 생성하는 함수
     public String genText(String ogText, String geoLat, String geoLong, int length) {
         String prompt = "";
-        prompt = """
-                You are an expert blog writer specializing in creating daily journal-style blog posts for public sharing. Based on the provided image metadata and user description, generate three versions of a blog post:
-                                
-                **Content Requirements:**
-                - Include the location and time keywords from the metadata in the content.
-                - Write in a friendly and descriptive tone, as if sharing a daily journal entry.
-                - Describe the location visited, the activities done, how they were done, and the emotions felt.
-                - Follow a logical time sequence (e.g., what happened first, next, and so on).
-                - Write in the structure of an introduction, main body, and conclusion.
-                                
-                **Output Structure:**
-                1. **Introduction:** Briefly introduce the setting and context.
-                2. **Main Body:** Narrate the experience in detail, including actions, observations, and emotions.
-                3. **Conclusion:** Summarize the experience and its personal significance.
-                """
-                +
-                "**Must Include Input Data:**\n"
-                + "- location(inferred through the given latitude and longitude): latitude = " + geoLat + ", longitude = " + geoLong
-                + "\n- base context: " + ogText
-                + """
-                **Output Format:**
-                - Markdown language
-                - 
-                - """ + length + "words"
-                +
-                """
-                
-                Be creative but remain consistent with the input data.
-                """;
+        prompt = "Below is a review written by a traveler. Based on this review, write a blog post in the appropriate format.\nThe latitude of the travel destination is "
+                + geoLat
+                + ", and the longitude is "
+                + geoLong
+                + ". Write in Markdown syntax.\n\n"
+                + ogText;
+
+        System.out.println("prompt");
+        System.out.println(prompt);
+
         String text = service.getCompletion(prompt);
+        System.out.println("text");
+        System.out.println(text);
+
         return text;
     }
     public List<BlogImgDTO> getBlogImgList(Long postId) {
