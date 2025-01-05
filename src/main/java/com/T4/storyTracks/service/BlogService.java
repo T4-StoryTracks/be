@@ -39,10 +39,16 @@ public class BlogService {
         return blogImgRepository.save(location);
     }
 
+    //글 정보 통째로 저장
+    public BlogPostEntity savePost(BlogPostEntity request) {
+        return blogRepository.save(request);
+    }
+
+
     //aiGenTextList를 생성하는 함수
     public String genText(String ogText, Long geoLat, Long geoLong, int length) {
-        String promt = "";
-        promt = """
+        String prompt = "";
+        prompt = """
                 You are an expert blog writer specializing in creating daily journal-style blog posts for public sharing. Based on the provided image metadata and user description, generate three versions of a blog post:
                                 
                 **Content Requirements:**
@@ -64,13 +70,14 @@ public class BlogService {
                 + """
                 **Output Format:**
                 - Markdown language
+                - 
                 - """ + length + "words"
                 +
                 """
                 
                 Be creative but remain consistent with the input data.
                 """;
-        String text = service.getCompletion(promt);
+        String text = service.getCompletion(prompt);
         return text;
     }
 }
