@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.swing.text.html.Option;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -119,6 +120,36 @@ public class BlogService {
 
         return postDTO;
     }
+
+    public BlogPostEntity savePostWithImages(BlogPostDTO request) {
+        //post 저장
+        BlogPostEntity blogPost = new BlogPostEntity();
+        blogPost.setTitle(request.getTitle());
+        blogPost.setOgText(request.getOgText());
+        blogPost.setAiGenText(request.getAiGenText());
+        blogPost.setPassword(request.getPassword());
+        blogPost.setRgstDtm(LocalDateTime.now());
+        blogPost = blogRepository.save(blogPost);
+
+        //img 저장 (이미지가 있으면)
+        if (request.getBlogImgList() != null) {
+            for (BlogImgDTO imgRequest : request.getBlogImgList()) {
+                BlogImgEntity blogImg = new BlogImgEntity();
+                blogImg.setGeoLat(imgRequest.getGeoLat());
+                blogImg.setGeoLong(imgRequest.getGeoLong());
+                blogImg.setImgPath(imgRequest.getImgPath());
+                blogImg.setImgDtm(LocalDateTime.now());
+                blogImg.setRgstDTm(LocalDateTime.now());
+                blogImg.setBlogPost(blogPost);  // 이미지에 게시글 매핑
+
+                blogImgRepository.save(blogImg);
+                blogPost.addImgEntityList(blogImg);  // 게시글과 이미지 연결
+            }
+        }
+
+        return blogPost;
+    }
+
 //    public List<BlogImgDTO> findImgAll() {
 //        List<BlogImgEntity> imgEntityList = blogImgRepository.find();
 //        List<BlogImgDTO> blogImgDTOList = new ArrayList<>();

@@ -1,6 +1,8 @@
 package com.T4.storyTracks.controller;
 
+import com.T4.storyTracks.dto.BlogPostDTO;
 import com.T4.storyTracks.dto.GenerateRequestDTO;
+import com.T4.storyTracks.entity.BlogPostEntity;
 import com.T4.storyTracks.repository.BlogRepository;
 import com.T4.storyTracks.service.BlogService;
 import lombok.RequiredArgsConstructor;
@@ -49,7 +51,7 @@ public class BlogController {
 //        return ResponseEntity.ok(aiGenTextList);
 //    }
 
-    //프론트에서 위도 경도, 사용자 글 받기 & 생성한 리스트 세개 프론트로 보내기 - generate content 버튼 클릭 시 ?
+    //프론트에서 위도 경도, 사용자 글 받기 & 생성한 리스트 세개 보내기 - generate content 버튼 클릭 시
     @PostMapping("/genList")
     public ResponseEntity<List<String>> generateList(@RequestBody GenerateRequestDTO request) {
         // BlogService를 호출하여 결과 리스트를 생성
@@ -68,8 +70,12 @@ public class BlogController {
 
 
     //사용자가 선택한 글/ 썸네일로 글 업로드 - Post 버튼 클릭 시
-//    @PostMapping("")
-//    @GetMapping("") //상세보기 화면
+    @PostMapping("/save")
+    public ResponseEntity<BlogPostEntity> savePost(@RequestBody BlogPostDTO request) {
+        BlogPostEntity savedPost = blogService.savePostWithImages(request);
+        return ResponseEntity.ok(savedPost);  // 저장된 게시글 반환
+    }
+
 
     //비번 일치하면 글 수정 및 삭제
 }
