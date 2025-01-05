@@ -7,6 +7,7 @@ import com.T4.storyTracks.entity.BlogImgEntity;
 import com.T4.storyTracks.entity.BlogPostEntity;
 import com.T4.storyTracks.repository.BlogImgRepository;
 import com.T4.storyTracks.repository.BlogRepository;
+import com.T4.storyTracks.service.GeminiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,7 +56,7 @@ public class BlogService {
 
 
     //aiGenTextList를 생성하는 함수
-    public String genText(String ogText, Long geoLat, Long geoLong, int length) {
+    public String genText(String ogText, String geoLat, String geoLong, int length) {
         String prompt = "";
         prompt = """
                 You are an expert blog writer specializing in creating daily journal-style blog posts for public sharing. Based on the provided image metadata and user description, generate three versions of a blog post:
