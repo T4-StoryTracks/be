@@ -55,7 +55,7 @@ public class BlogService {
 
 
     //aiGenTextList를 생성하는 함수
-    public String genText(String ogText, Long geoLat, Long geoLong, int length) {
+    public String genText(String ogText, String geoLat, String geoLong, int length) {
         String prompt = "";
         prompt = """
                 You are an expert blog writer specializing in creating daily journal-style blog posts for public sharing. Based on the provided image metadata and user description, generate three versions of a blog post:

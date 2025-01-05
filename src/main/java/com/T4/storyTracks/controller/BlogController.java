@@ -2,6 +2,7 @@ package com.T4.storyTracks.controller;
 
 import com.T4.storyTracks.dto.BlogImgDTO;
 import com.T4.storyTracks.dto.BlogPostDTO;
+import com.T4.storyTracks.dto.GenerateRequestDTO;
 import com.T4.storyTracks.entity.BlogImgEntity;
 import com.T4.storyTracks.entity.BlogPostEntity;
 import com.T4.storyTracks.repository.BlogRepository;
@@ -26,36 +27,54 @@ public class BlogController {
     public final BlogService blogService;
 
 
-    //프론트에서 위도 경도, 사용자 글 받기 - generate content 버튼 클릭 시 ?
-    @PostMapping("/saveImg")
-    public ResponseEntity<BlogImgEntity> saveLocation(@RequestBody BlogImgDTO request) {
-        request.setRgstDtm(LocalDateTime.now());
-        BlogImgEntity savedLocation = blogService.saveLagLong(request);
-        return ResponseEntity.ok(savedLocation);
-    }
+//    //프론트에서 위도 경도, 사용자 글 받기 - generate content 버튼 클릭 시 ?
+//    @PostMapping("/saveImg")
+//    public ResponseEntity<BlogImgEntity> saveLocation(@RequestBody BlogImgDTO request) {
+//        request.setRgstDtm(LocalDateTime.now());
+//        BlogImgEntity savedLocation = blogService.saveLagLong(request);
+//        return ResponseEntity.ok(savedLocation);
+//    }
+//
+//    //글 내용 - generate content 버튼 클릭 시 ?
+//    @PostMapping("/savePost")
+//    public ResponseEntity<BlogPostEntity> savePost(@RequestBody BlogPostEntity request) {
+//        BlogPostEntity post = blogService.savePost(request);
+//        return ResponseEntity.ok(post);
+//    }
+//
+//    //생성한 리스트 세개 프론트로 보내기 - generate content/ change description 클릭 시
+//    @GetMapping("/aiGen/{postId}")
+//    public ResponseEntity<List<String>> aiGenTextList(@PathVariable(name = "postId") Long postId) {
+//        BlogPostEntity creatingPost = blogRepository.findById(postId)
+//                .orElseThrow(() -> new EntityNotFoundException("Blog post with ID " + postId + " not found."));
+//        String ogText = creatingPost.getOgText();
+//        long geoLag = 12;
+//        long geoLong = 38;
+//        int[] length = {200, 350, 450}; //프롬프트에 요청한 글 길이
+//        List<String> aiGenTextList = new ArrayList<>();
+//        for (int len : length) {
+//            aiGenTextList.add(blogService.genText(ogText, geoLag, geoLong, len));
+//        }
+//        return ResponseEntity.ok(aiGenTextList);
+//    }
 
-    //글 내용 - generate content 버튼 클릭 시 ?
-    @PostMapping("/savePost")
-    public ResponseEntity<BlogPostEntity> savePost(@RequestBody BlogPostEntity request) {
-        BlogPostEntity post = blogService.savePost(request);
-        return ResponseEntity.ok(post);
-    }
-
-    //생성한 리스트 세개 프론트로 보내기 - generate content/ change description 클릭 시
-    @GetMapping("/aiGen/{postId}")
-    public ResponseEntity<List<String>> aiGenTextList(@PathVariable(name = "postId") Long postId) {
-        BlogPostEntity creatingPost = blogRepository.findById(postId)
-                .orElseThrow(() -> new EntityNotFoundException("Blog post with ID " + postId + " not found."));
-        String ogText = creatingPost.getOgText();
-        long geoLag = 12;
-        long geoLong = 38;
+    //프론트에서 위도 경도, 사용자 글 받기 & 생성한 리스트 세개 프론트로 보내기 - generate content 버튼 클릭 시 ?
+    @PostMapping("/genList")
+    public ResponseEntity<List<String>> generateList(@RequestBody GenerateRequestDTO request) {
+        // BlogService를 호출하여 결과 리스트를 생성
+//        String title = request.getTitle();
+        String ogText = request.getOgText();
+        String geoLat = request.getGeoLat();
+        String geoLong = request.getGeoLong();
         int[] length = {200, 350, 450}; //프롬프트에 요청한 글 길이
         List<String> aiGenTextList = new ArrayList<>();
         for (int len : length) {
-            aiGenTextList.add(blogService.genText(ogText, geoLag, geoLong, len));
+            aiGenTextList.add(blogService.genText(ogText, geoLat, geoLong, len));
         }
+        // 생성된 리스트를 반환
         return ResponseEntity.ok(aiGenTextList);
     }
+
 
     //사용자가 선택한 글/ 썸네일로 글 업로드 - Post 버튼 클릭 시
 //    @PostMapping("")
