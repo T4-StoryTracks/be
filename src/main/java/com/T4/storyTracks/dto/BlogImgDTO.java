@@ -37,7 +37,6 @@ public class BlogImgDTO {
         this.geoLong = geoLong;
         this.imgPath = imgPath;
         this.imgDtm = imgDtm;
-        this.rgstDtm = rgstDtm;
         this.thumbYn = thumbYn;
     }
 
@@ -52,6 +51,7 @@ public class BlogImgDTO {
         blogImgDTO.setImgPath(blogImgEntity.getImgPath());
         blogImgDTO.setImgDtm(blogImgEntity.getImgDtm());
         blogImgDTO.setRgstDtm(blogImgEntity.getRgstDTm());
+        blogImgDTO.setThumbYn(blogImgEntity.getThumbYn());
 
         return blogImgDTO;
     }
