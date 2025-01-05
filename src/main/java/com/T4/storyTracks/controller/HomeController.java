@@ -19,7 +19,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("posts")
+@RequestMapping("/posts")
 public class HomeController {
     private final BlogService blogService;
 
