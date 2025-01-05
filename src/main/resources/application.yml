@@ -5,7 +5,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://storytracks-db.ctgwc28ags9c.us-west-2.rds.amazonaws.com:3306/mydatabase?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://storytracks-db.ctgwc28ags9c.us-west-2.rds.amazonaws.com:3306/mydatabase?serverTimezone=America/Vancouver&characterEncoding=UTF-8
     username: admin
     password: password1234
 
