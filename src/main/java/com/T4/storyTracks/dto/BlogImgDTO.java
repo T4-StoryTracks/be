@@ -18,8 +18,8 @@ public class BlogImgDTO {
 
     private Long imgId;
     private Long postId;
-    private Long geoLat;
-    private Long geoLong;
+    private String geoLat;
+    private String geoLong;
     private String imgPath;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime imgDtm;
@@ -30,14 +30,13 @@ public class BlogImgDTO {
     private String thumbYn;
 //    private BlogPostEntity blogPost;
 
-    public BlogImgDTO(Long imgId, Long postId, Long geoLat, Long geoLong, String imgPath, LocalDateTime imgDtm, String thumbYn) {
+    public BlogImgDTO(Long imgId, Long postId, String geoLat, String geoLong, String imgPath, LocalDateTime imgDtm, String thumbYn) {
         this.imgId = imgId;
         this.postId = postId;
         this.geoLat = geoLat;
         this.geoLong = geoLong;
         this.imgPath = imgPath;
         this.imgDtm = imgDtm;
-        this.rgstDtm = rgstDtm;
         this.thumbYn = thumbYn;
     }
 
@@ -52,6 +51,7 @@ public class BlogImgDTO {
         blogImgDTO.setImgPath(blogImgEntity.getImgPath());
         blogImgDTO.setImgDtm(blogImgEntity.getImgDtm());
         blogImgDTO.setRgstDtm(blogImgEntity.getRgstDTm());
+        blogImgDTO.setThumbYn(blogImgEntity.getThumbYn());
 
         return blogImgDTO;
     }

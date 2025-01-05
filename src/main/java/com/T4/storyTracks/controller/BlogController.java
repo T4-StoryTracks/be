@@ -25,12 +25,6 @@ public class BlogController {
     public final BlogRepository blogRepository;
     public final BlogService blogService;
 
-//    @PostMapping("/save")
-//    @Description("저장")
-//    public String save(@ModelAttribute BlogPostDTO blogPostDTO) throws IOException {
-//        blogService.save(blogPostDTO);
-//        return "index";
-//    }
 
     //프론트에서 위도 경도, 사용자 글 받기 - generate content 버튼 클릭 시 ?
     @PostMapping("/saveImg")

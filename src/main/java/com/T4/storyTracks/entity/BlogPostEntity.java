@@ -17,6 +17,7 @@ import java.util.List;
 public class BlogPostEntity {
 
     @Id
+    @Column(nullable = false, name="post_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
 

@@ -11,17 +11,18 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-@Table(name = "tb_imgs")
+@Table(name = "imgs")
 public class BlogImgEntity {
     @Id
+    @Column(nullable = false, name="img_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long imgId;
 
-    @Column(name="geo_lat")
-    private Long geoLat;
+    @Column(name="geo_lat", length = 10)
+    private String geoLat;
 
-    @Column(name="geo_long")
-    private Long geoLong;
+    @Column(name="geo_long", length = 10)
+    private String geoLong;
 
     @Column(name="img_path")
     private String imgPath;
@@ -37,7 +38,10 @@ public class BlogImgEntity {
     @Column(name="thumb_yn")
     private String thumbYn;
 
+//    @Column(name="post_id")
+//    private String postId;
+
     @ManyToOne
-    @JoinColumn(name="postId")
+    @JoinColumn(name="post_Id")
     private BlogPostEntity blogPost;
 }
