@@ -23,6 +23,8 @@ public class GeminiService {
         return geminiInterface.getCompletion(GEMINI_PRO, request);
     }
 
+    public void getImgMetaList(){};
+
     public String getCompletion(String text) {
         GeminiRequest geminiRequest = new GeminiRequest(text);
         GeminiResponse response = getCompletion(geminiRequest);

@@ -1,9 +1,12 @@
 package com.T4.storyTracks.controller;
 
-import com.T4.storyTracks.dto.GenerateRequestDTO;
+import com.T4.storyTracks.dto.*;
 import com.T4.storyTracks.repository.BlogRepository;
 import com.T4.storyTracks.service.BlogService;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,10 +15,39 @@ import java.util.*;
 //@Controller
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/blog")
 public class BlogController {
     public final BlogRepository blogRepository;
     public final BlogService blogService;
+
+    JsonMapper mapper = JsonMapper.builder().configure(MapperFeature.USE_WRAPPER_NAME_AS_PROPERTY_NAME, true).build();
+
+    @PostMapping("/generate")
+    public ResponseEntity<?> generateAIText(@RequestBody GenInputDTO genInputDTO) {
+        Map<String, String> genAIList = new HashMap<>();
+        ImgMetaDTO imgMetaDTO = genInputDTO.getImgMetaDTO();
+//        for (ImgMetaDTO imgMetaDTO: genInputDTO.getImgInfoList()) {
+//            //System.out.println(imgMetaDTO.getGeoLat()+", "+imgMetaDTO.getGeoLong());
+//            genAIListAll.add(blogService.createPost(imgMetaDTO, genInputDTO.getOgText()));
+//        }
+        genAIList = blogService.createPost(imgMetaDTO, genInputDTO.getOgText());
+        return new ResponseEntity<>(genAIList, HttpStatus.OK);
+    }
+
+    @PostMapping("/save")
+    public void savePost(@RequestBody NewPostDTO newPostDTO) {
+        BlogPostDTO postDTO = new BlogPostDTO(newPostDTO.getTitle(), newPostDTO.getOgText(), newPostDTO.getAiGenText());
+        Long postId = blogService.savePost(postDTO);
+        String imgUrl = "";
+        List<Map<String, String>> imgSaveList = new ArrayList<>();
+        for (BlogImgDTO imgDTO : newPostDTO.getImgSaveList()) {
+            imgUrl = blogService.saveImgS3(imgDTO, postId);
+            blogService.saveImgList(imgDTO, postId, imgUrl);
+        }
+
+
+//        return new ResponseEntity<>(postId, HttpStatus.OK);
+    }
 
 
 //    //프론트에서 위도 경도, 사용자 글 받기 - generate content 버튼 클릭 시 ?

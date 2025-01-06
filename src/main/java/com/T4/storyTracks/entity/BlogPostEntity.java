@@ -1,5 +1,6 @@
 package com.T4.storyTracks.entity;
 
+import com.T4.storyTracks.dto.BlogPostDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,13 +37,13 @@ public class BlogPostEntity {
     private String password;
 
     @Column(name="rgst_dtm")
-//    @CreationTimestamp
-//    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime rgstDtm;
 
     @Column(name="chng_dtm")
-//    @CreationTimestamp
-//    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime chngDtm;
 
     @OneToMany(mappedBy = "blogPost")
@@ -51,5 +52,30 @@ public class BlogPostEntity {
     public void addImgEntityList(BlogImgEntity blogImg) {
         this.imgEntityList.add(blogImg);
         blogImg.setBlogPost(this);
+    }
+
+
+    public static BlogPostEntity toPostEntity(BlogPostDTO postDTO) {
+
+        BlogPostEntity postEntity = new BlogPostEntity();
+
+
+
+        postEntity.setTitle(postDTO.getTitle());
+
+        postEntity.setPassword("password");
+
+        postEntity.setOgText(postDTO.getOgText());
+
+        postEntity.setAiGenText(postDTO.getAiGenText());
+
+        postEntity.setRgstDtm(LocalDateTime.now());
+
+        postEntity.setChngDtm(LocalDateTime.now());
+
+
+
+        return postEntity;
+
     }
 }
