@@ -1,5 +1,6 @@
 package com.T4.storyTracks.dto;
 
+import com.T4.storyTracks.dto.BlogImgDTO;
 import com.T4.storyTracks.entity.BlogImgEntity;
 import com.T4.storyTracks.entity.BlogPostEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -29,7 +30,7 @@ public class BlogPostDTO {
     private LocalDateTime rgstDtm;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime chngDtm;
-    private List<BlogImgDTO> blogImgList = new ArrayList<>();
+    private List<com.T4.storyTracks.dto.BlogImgDTO> blogImgList = new ArrayList<>();
 
     public BlogPostDTO(Long postId, String title, String ogText, String aiGenText, String password, LocalDateTime rgstDtm) {
         this.postId = postId;
@@ -39,6 +40,11 @@ public class BlogPostDTO {
         this.password = password;
         this.rgstDtm = rgstDtm;
         //this.chngDtm = chngDtm;
+    }
+    public BlogPostDTO(String title, String ogText, String aiGenText) {
+        this.title = title;
+        this.ogText = ogText;
+        this.aiGenText = aiGenText;
     }
 
     @Description(value="전체 조회 시 대표이미지 정보만 가져옴")

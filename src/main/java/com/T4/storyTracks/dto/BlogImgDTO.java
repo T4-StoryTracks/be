@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -21,11 +22,12 @@ public class BlogImgDTO {
     private String geoLat;
     private String geoLong;
     private String imgPath;
+    private MultipartFile imgFile;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime imgDtm;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime rgstDtm;
-//    private String imgDtm;
+    //    private String imgDtm;
 //    private String rgstDtm;
     private String thumbYn;
 //    private BlogPostEntity blogPost;
@@ -54,5 +56,6 @@ public class BlogImgDTO {
         blogImgDTO.setThumbYn(blogImgEntity.getThumbYn());
 
         return blogImgDTO;
+
     }
 }
