@@ -8,15 +8,33 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import com.T4.storyTracks.entity.BlogImgEntity;
+import com.T4.storyTracks.entity.BlogPostEntity;
+import com.T4.storyTracks.repository.BlogRepository;
+import com.T4.storyTracks.service.BlogService;
+import com.T4.storyTracks.service.S3Service;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Description;
+import org.springframework.http.*;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.service.invoker.HttpRequestValues;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.*;
+
 
 //@Controller
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/blog")
 public class BlogController {
+
     public final BlogRepository blogRepository;
     public final BlogService blogService;
 
@@ -78,30 +96,23 @@ public class BlogController {
 //        for (int len : length) {
 //            aiGenTextList.add(blogService.genText(ogText, geoLag, geoLong, len));
 //        }
-//        return ResponseEntity.ok(aiGenTextList);
-//    }
-
-    //프론트에서 위도 경도, 사용자 글 받기 & 생성한 리스트 세개 프론트로 보내기 - generate content 버튼 클릭 시 ?
-    @PostMapping("/genList")
-    public ResponseEntity<List<String>> generateList(@RequestBody GenerateRequestDTO request) {
-        // BlogService를 호출하여 결과 리스트를 생성
-//        String title = request.getTitle();
-        String ogText = request.getOgText();
-        String geoLat = request.getGeoLat();
-        String geoLong = request.getGeoLong();
-        int[] length = {200, 350, 450}; //프롬프트에 요청한 글 길이
-        List<String> aiGenTextList = new ArrayList<>();
-        for (int len : length) {
-            aiGenTextList.add(blogService.genText(ogText, geoLat, geoLong, len));
-        }
-        // 생성된 리스트를 반환
-        return ResponseEntity.ok(aiGenTextList);
+        genAIList = blogService.createPost(imgMetaDTO, genInputDTO.getOgText());
+        return new ResponseEntity<>(genAIList, HttpStatus.OK);
     }
 
+    @PostMapping("/save")
+    public void savePost(@RequestBody NewPostDTO newPostDTO) {
+        BlogPostDTO postDTO = new BlogPostDTO(newPostDTO.getTitle(), newPostDTO.getOgText(), newPostDTO.getAiGenText());
+        Long postId = blogService.savePost(postDTO);
+        String imgUrl = "";
+        List<Map<String, String>> imgSaveList = new ArrayList<>();
+        for (BlogImgDTO imgDTO : newPostDTO.getImgSaveList()) {
+            imgUrl = blogService.saveImgS3(imgDTO, postId);
+            blogService.saveImgList(imgDTO, postId, imgUrl);
+        }
 
-    //사용자가 선택한 글/ 썸네일로 글 업로드 - Post 버튼 클릭 시
-//    @PostMapping("")
-//    @GetMapping("") //상세보기 화면
 
-    //비번 일치하면 글 수정 및 삭제
+//        return new ResponseEntity<>(postId, HttpStatus.OK);
+    }
+
 }

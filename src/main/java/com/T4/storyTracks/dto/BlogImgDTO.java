@@ -27,7 +27,7 @@ public class BlogImgDTO {
     private LocalDateTime imgDtm;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime rgstDtm;
-//    private String imgDtm;
+    //    private String imgDtm;
 //    private String rgstDtm;
     private String thumbYn;
 //    private BlogPostEntity blogPost;
@@ -56,5 +56,6 @@ public class BlogImgDTO {
         blogImgDTO.setThumbYn(blogImgEntity.getThumbYn());
 
         return blogImgDTO;
+
     }
 }

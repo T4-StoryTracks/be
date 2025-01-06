@@ -3,8 +3,11 @@ package com.T4.storyTracks.service;
 import com.T4.storyTracks.GeminiInterface;
 import com.T4.storyTracks.dto.GeminiRequest;
 import com.T4.storyTracks.dto.GeminiResponse;
+import com.T4.storyTracks.dto.ImgMetaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class GeminiService {

@@ -1,6 +1,7 @@
 package com.T4.storyTracks.entity;
 
 import com.T4.storyTracks.dto.BlogPostDTO;
+import com.T4.storyTracks.entity.BlogImgEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -56,26 +57,15 @@ public class BlogPostEntity {
 
 
     public static BlogPostEntity toPostEntity(BlogPostDTO postDTO) {
-
         BlogPostEntity postEntity = new BlogPostEntity();
 
-
-
         postEntity.setTitle(postDTO.getTitle());
-
         postEntity.setPassword("password");
-
         postEntity.setOgText(postDTO.getOgText());
-
         postEntity.setAiGenText(postDTO.getAiGenText());
-
         postEntity.setRgstDtm(LocalDateTime.now());
-
         postEntity.setChngDtm(LocalDateTime.now());
 
-
-
         return postEntity;
-
     }
 }

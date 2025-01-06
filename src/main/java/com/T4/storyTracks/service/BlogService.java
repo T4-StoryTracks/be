@@ -4,14 +4,18 @@ import com.T4.storyTracks.dto.BlogImgDTO;
 import com.T4.storyTracks.dto.BlogListPostDTO;
 import com.T4.storyTracks.dto.BlogPostDTO;
 import com.T4.storyTracks.dto.ImgMetaDTO;
+import com.T4.storyTracks.dto.*;
 import com.T4.storyTracks.entity.BlogImgEntity;
 import com.T4.storyTracks.entity.BlogPostEntity;
 import com.T4.storyTracks.repository.BlogImgRepository;
 import com.T4.storyTracks.repository.BlogRepository;
 import com.T4.storyTracks.service.GeminiService;
+import com.T4.storyTracks.service.S3Service;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.swing.text.html.Option;
 import java.io.IOException;
@@ -28,28 +32,14 @@ public class BlogService {
     private final S3Service s3Service;
 
     public List<BlogListPostDTO> findAll() {
-//        Optional<BlogImgEntity> thumbImgEntity = new
         List<BlogPostEntity> blogPostEntityList= blogRepository.findAll();
         List<BlogListPostDTO> blogPostDTOList =new ArrayList<>();
         for (BlogPostEntity postEntity: blogPostEntityList) {
-            //thumbImgEntity = blogImgRepository.findThumbImg(postEntity.getPostId(), "Y");
-//            thumbImgEntity = blogImgRepository.findByPostIdAndThumbYn(postEntity.getPostId(), "Y");
             blogPostDTOList.add(BlogListPostDTO.toPostListDTO(postEntity, blogImgRepository.findByBlogPostPostIdAndThumbYn(postEntity.getPostId(), "Y")
                     .orElseThrow(() -> new IllegalArgumentException("blogImgEntity no thumbImg"))));
-//            blogImgRepository.findByPostIdAndThumbYn(postEntity.getPostId(), "Y");
-
         }
         return blogPostDTOList;
     }
-
-    //위도 경도 저장 함수
-    public BlogImgEntity saveLagLong(BlogImgDTO request) {
-        BlogImgEntity location = new BlogImgEntity();
-        location.setGeoLat(request.getGeoLat());
-        location.setGeoLong(request.getGeoLong());
-        return blogImgRepository.save(location);
-    }
-
     //글 정보 통째로 저장
     public Long savePost(BlogPostDTO newPostDTO) {
         return blogRepository.save(BlogPostEntity.toPostEntity(newPostDTO)).getPostId();
@@ -74,12 +64,12 @@ public class BlogService {
 
         return text;
     }
+  
     public List<BlogImgDTO> getBlogImgList(Long postId) {
         List<BlogImgEntity> imgEntityList = blogImgRepository.findByBlogPostPostId(postId);
         if (imgEntityList.isEmpty()) {
             throw new IllegalArgumentException("no imgEntityList");
         }
-
         List<BlogImgDTO> imgDTOList = new ArrayList<>();
         imgEntityList.stream().forEach(x -> imgDTOList.add(BlogImgDTO.toImgDTO(x)));
         return imgDTOList;
@@ -157,6 +147,7 @@ public Map<String, String> createPost(ImgMetaDTO imgMetaDTO, String ogText) { //
 //        String text = service.getCompletion(prompt);
 //        return text; //prompt.substring(0, length); // test용
 //    }
+
 
     public String saveImgS3(BlogImgDTO imgDTO, Long postId) {
         try {
