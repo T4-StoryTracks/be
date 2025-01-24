@@ -30,15 +30,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      # 4. Gradle 빌드
+      # 4. Gradle 캐시 정리
+      - name: Clean Gradle build
+        run: ./gradlew clean
+
+      # 5. Gradle 빌드
       - name: Build with Gradle
         run: ./gradlew bootJar
 
-      # 5. Gradle 빌드 결과 확인
+      # 6. Gradle 빌드 결과 확인
       - name: Verify build artifacts
         run: ls build/libs/
 
-      # 6. EC2로 파일 전송
+      # 7. EC2로 파일 전송
       #- uses: actions/checkout@v4
       - name: Copy files to EC2
         uses: appleboy/scp-action@v0.1.7
@@ -50,7 +54,7 @@ jobs:
           source: build/libs/*.jar
           target: ~/
 
-      # 7. EC2에서 애플리케이션 실행
+      # 8. EC2에서 애플리케이션 실행
       # script에 pkill -f 'java -jar' || true 는 삭제
       - name: Run app on EC2
         uses: appleboy/ssh-action@v0.1.7
